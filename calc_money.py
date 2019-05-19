@@ -405,7 +405,13 @@ class RqspfBifenRelationship(IPlayRelationship):
 class BanquanJinqiuRelationship(SpfJinqiuRelationship):
     def getRelationship(self, banquanIndex, jinqiuIndex):
         spfIndexs = banquanIndex2SpfIndex(banquanIndex)
-        return super(BanquanJinqiuRelationship, self).getRelationship(spfIndexs[0], jinqiuIndex)
+        var= super(BanquanJinqiuRelationship, self).getRelationship(spfIndexs[1], jinqiuIndex)
+        # 胜负，负胜，总进球大于等于3
+        if abs(spfIndexs[0]-spfIndexs[1])==2 and var==VAR_50:
+            if jinqiuIndex<3:
+                return VAR_0
+        return var
+
 
 
 class BanquanBifenRelationship(IPlayRelationship):
@@ -445,6 +451,11 @@ class JinqiuBifenRelationship(IPlayRelationship):
         # //0球和0-0的比分
         if (ballIndex == 0 and allBall == 0):
             return VAR_100
+        #其它比分总进球为7
+        if(info.isOther):
+            if ballIndex==7:
+                return VAR_50
+            return VAR_0
         if (ballIndex == allBall):
             return VAR_50
         return VAR_0
@@ -510,8 +521,15 @@ def playIndex2PlayText(playIndex):
 
 
 def var2Text(var):
+    # if VAR_0==var:
+    #     return "不可能发生的----"
+    # if VAR_50==var:
+    #     return "有可能发生的"
+    # if VAR_100==var:
+    #     return "%100 一定发生的"
+    # return "NONE "
     dict = {
-        VAR_50: "可能发生",
+        VAR_50: "* 有可能发生",
         VAR_100: "一定发生",
         VAR_0: "不可能发生"
     }
@@ -523,16 +541,15 @@ def playIndex2Text(playIndex):
 
 
 def getRelationship(playIndex1, playIndex2, rangqiu):
-    print "比较玩法"
-    print playIndex2Text(playIndex1)
-    print playIndex2Text(playIndex2)
-    print "让球数", rangqiu
+
     playWay1 = index2PlayId(playIndex1)
     playWay2 = index2PlayId(playIndex2)
     # // 玩法相同
     if (playWay1 == playWay2):
-        print "玩法相同", playWay1
+        # print "玩法相同", var2Text(VAR_0)
+        # print "-----------"
         return VAR_0
+    print "比较玩法", playIndex2Text(playIndex1), playIndex2Text(playIndex2), "让球数", rangqiu
     # // 得到玩法的第一个索引
     playIndex1 = playIndex1 - getPlayRangeIndex(playWay1)[0]
     playIndex2 = playIndex2 - getPlayRangeIndex(playWay2)[0]
@@ -545,6 +562,7 @@ def getRelationship(playIndex1, playIndex2, rangqiu):
 
     result = relationship.getRelationship(playIndex1, playIndex2)
     print var2Text(result)
+    print "-----------"
     return result
 
 
@@ -811,19 +829,28 @@ if __name__ == "__main__":
     # 过关方式
     # passWays = [1, 2, 3, 4, 5, 6]
     #
-    # getRelationship(17, 37, 2)
+
+    getRelationship(SEL_30, SEL_2, 1)
+    # getRelationship(SEL_ping, SEL_3, 1)
+    # list= getCombinationList(54,2)
+    # for arr in list:
+    #     if(arr[0]>=SEL_01):
+    #         break
+    #     getRelationship(arr[0], arr[1], 1)
+
+
     #
     # sett = {1, 2, 1}
 
     # print getCombinationList(4, 4)
 
 
-    listFballItems=[
-        FBallItem([SEL_zhusheng,SEL_3_0,SEL_2_5],1),
-        FBallItem([SEL_0,SEL_0_0], 1)
-    ]
-
-    print getRangeReturns(listFballItems,[2])
+    # listFballItems=[
+    #     FBallItem([SEL_zhusheng,SEL_3_0,SEL_2_5],1),
+    #     FBallItem([SEL_0,SEL_0_0], 1)
+    # ]
+    #
+    # print getRangeReturns(listFballItems,[2])
 
 
 

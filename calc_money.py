@@ -814,7 +814,8 @@ if __name__ == "__main__":
 
     listFballItems=[
         FBallItem([SEL_zhusheng,SEL_3_0,SEL_2_5],1),
-        FBallItem([SEL_0,SEL_0_0], 1)
+        FBallItem([SEL_0,SEL_0_0], 1),
+        FBallItem([SEL_0, SEL_0_0], 1)
     ]
 
     print getRangeReturns(listFballItems,[2])

@@ -615,14 +615,20 @@ class GroupOne(object):
         # 判断传递关系
         if isContainB:
             for integer in self.hashSet:
-                if listParis.__contains__(Pair(pair.a, integer)) == False:
+                if self.containsItem(Pair(pair.a, integer),listParis) == False:
                     return False
             return True
         if isContainA:
             for integer in self.hashSet:
-                if listParis.__contains__(Pair(pair.b, integer)) == False:
+                if self.containsItem(Pair(pair.b, integer),listParis) == False:
                     return False
             return True
+        return False
+
+    def containsItem(self,pair,pairs):
+        for i in pairs:
+            if (i.equals(pair)):
+                return True
         return False
 
 
@@ -814,11 +820,13 @@ if __name__ == "__main__":
 
     listFballItems=[
         FBallItem([SEL_zhusheng,SEL_3_0,SEL_2_5],1),
-        FBallItem([SEL_0,SEL_0_0], 1),
-        FBallItem([SEL_0, SEL_0_0], 1)
+        FBallItem([SEL_0,SEL_0_0], 1)
     ]
 
     print getRangeReturns(listFballItems,[2])
+
+
+
 
 
 

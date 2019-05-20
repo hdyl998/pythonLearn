@@ -857,11 +857,20 @@ if __name__ == "__main__":
     # sett = {1, 2, 1}
 
     # print getCombinationList(4, 4)
+    import time
+    vartime=time.time();
+    #
+    # listFballItems = [
+    #     FBallItem([SEL_zhusheng, SEL_3, SEL_3_0, SEL_2_5, SEL_0_5, SEL_30, SEL_03], 1),
+    #     FBallItem([SEL_0, SEL_0_0], 1)
+    # ]
+    listFballItems = [
+        FBallItem([SEL_zhusheng, SEL_rangfu], 1),
+        FBallItem([SEL_zhusheng, SEL_rangfu], 1),
+        FBallItem([SEL_zhusheng, SEL_rangfu], 1)
+    ]
 
     #
-    listFballItems = [
-        FBallItem([SEL_zhusheng, SEL_3, SEL_3_0, SEL_2_5, SEL_0_5, SEL_30, SEL_03], 1),
-        FBallItem([SEL_0, SEL_0_0], 1)
-    ]
-    #
     print getRangeReturns(listFballItems, [2])
+
+    print time.time()-vartime;

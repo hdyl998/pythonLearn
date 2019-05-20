@@ -231,26 +231,26 @@ class SpfRqspfRelationship(IPlayRelationship):
 def rqspfIndex2SpfIndexs(rqspfIndex, rangqiu):
     if (rangqiu == 1):  # 主+1
         if (rqspfIndex == 0):
-            return {0, 1}  # 让胜->胜平
+            return [0, 1]  # 让胜->胜平
         else:
-            return {2}  # 让平/让负->负
+            return [2]  # 让平/让负->负
     elif (rangqiu >= 2):  # {#主+2以上
         if (rqspfIndex == 0):
-            return {0, 1, 2}  # 让胜->胜平负
+            return [0, 1, 2]  # 让胜->胜平负
         else:
-            return {2}  # 让平/让负->负
+            return [2]  # 让平/让负->负
     elif (rangqiu == -1):  # {主-1
         if (rqspfIndex == 0 or rqspfIndex == 1):
-            return {0}  # 让胜/让平->胜
+            return [0]  # 让胜/让平->胜
         else:
-            return {0, 1}  # 让负->平负
+            return [0, 1]  # 让负->平负
     elif (rangqiu <= -2):  # {主-2以上
         if (rqspfIndex == 0 or rqspfIndex == 1):
-            return {0}  # 让胜/让平->胜
+            return [0]  # 让胜/让平->胜
         else:
-            return {0, 1, 2}  # 让负->胜平负
+            return [0, 1, 2]  # 让负->胜平负
     else:
-        return {}
+        return []
 
 
 def isArrayContainValue(arr, value):
@@ -866,16 +866,12 @@ if __name__ == "__main__":
     # ]
     listFballItems = [
         FBallItem([SEL_zhusheng,SEL_0_4], 1),
-        FBallItem([SEL_zhusheng], 1),
-        FBallItem([SEL_zhusheng], 1),
-        FBallItem([SEL_zhusheng], 1),
-        FBallItem([SEL_zhusheng], 1),
-        FBallItem([SEL_zhusheng], 1),
-        FBallItem([SEL_zhusheng], 1),
-        FBallItem([SEL_zhusheng], 1)
+        FBallItem([SEL_zhusheng,SEL_0_4], 1),
+        FBallItem([SEL_zhusheng,SEL_0_4], 1),
+
     ]
 
     #
-    print getRangeReturns(listFballItems, [2,3,4,5,6,7,8])
+    print getRangeReturns(listFballItems, [2,3])
 
     print time.time()-vartime;

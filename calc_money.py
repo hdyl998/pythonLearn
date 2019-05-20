@@ -562,7 +562,7 @@ def getRelationship(playIndex1, playIndex2, rangqiu):
 
     result = relationship.getRelationship(playIndex1, playIndex2)
     print var2Text(result)
-    print "-----------"
+    print "--------------------------------------------"
     return result
 
 
@@ -582,6 +582,8 @@ class Pair:
         self.a = minVar
         self.b = maxVar
         self.value = value
+    def __str__(self):
+        return "%d,%d"%(self.a,self.b);
 
     def isMaxRate(self):
         return self.value == VAR_50 or self.value == VAR_100
@@ -620,26 +622,32 @@ class GroupOne(object):
     def addOne(self, a):
         self.hashSet.add(a)
 
-    def isNeedMergin(self, pair, listParis):
+
+
+    def isFinishMergin(self, pair, listParis):
         if self.hashSet.__len__() == 0:
             return False
         # 都添加了，所以不需要合并
         isContainA = self.hashSet.__contains__(pair.a)
         isContainB = self.hashSet.__contains__(pair.b)
 
+        print "pair",pair
+
         if (isContainA and isContainB):
-            return False
+            return True
 
         # 判断传递关系
         if isContainB:
             for integer in self.hashSet:
                 if self.containsItem(Pair(pair.a, integer),listParis) == False:
                     return False
+            self.add(pair)
             return True
         if isContainA:
             for integer in self.hashSet:
                 if self.containsItem(Pair(pair.b, integer),listParis) == False:
                     return False
+            self.add(pair)
             return True
         return False
 
@@ -689,8 +697,7 @@ class Groups:
 
     def add2Group(self, pair, pairLists):
         for one in self.listGroups:
-            if (one.isNeedMergin(pair, pairLists)):
-                one.add(pair)
+            if (one.isFinishMergin(pair, pairLists)):
                 return
         self.addNewGroupPair(pair)
 
@@ -829,7 +836,7 @@ if __name__ == "__main__":
     # 过关方式
     # passWays = [1, 2, 3, 4, 5, 6]
     #
-
+    # 测试关系
     getRelationship(SEL_30, SEL_2, 1)
     # getRelationship(SEL_ping, SEL_3, 1)
     # list= getCombinationList(54,2)
@@ -845,12 +852,12 @@ if __name__ == "__main__":
     # print getCombinationList(4, 4)
 
 
-    # listFballItems=[
-    #     FBallItem([SEL_zhusheng,SEL_3_0,SEL_2_5],1),
-    #     FBallItem([SEL_0,SEL_0_0], 1)
-    # ]
-    #
-    # print getRangeReturns(listFballItems,[2])
+    listFballItems=[
+        FBallItem([SEL_zhusheng,SEL_3,SEL_3_0,SEL_2_5],1),
+        FBallItem([SEL_0,SEL_0_0], 1)
+    ]
+
+    print getRangeReturns(listFballItems,[2])
 
 
 

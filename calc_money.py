@@ -4,6 +4,7 @@
 # 文件名：test.py
 import sys
 
+# 胜平负 让球  半全场 总进球 比分 这个顺序
 listSer = ("3", "1", "0", "3", "1", "0",
            "3-3", "3-1", "3-0",
            "1-3", "1-1", "1-0",
@@ -17,7 +18,6 @@ listSer = ("3", "1", "0", "3", "1", "0",
            "0:1", "0:2", "1:2", "0:3", "1:3",
            "2:3", "0:4", "1:4", "2:4", "0:5",
            "1:5", "2:5", "负其它")
-
 
 listText = ("主胜", "平", "客胜", "主胜", "平", "客胜",
             "胜胜", "胜平", "胜负",
@@ -95,61 +95,60 @@ listOdd = (
     "4.15"
 )
 
-
-SEL_zhusheng=0
-SEL_ping=1
-SEL_kesheng=2
-SEL_rangsheng=3
-SEL_rangping=4
-SEL_rangfu=5
-SEL_33=6
-SEL_31=7
-SEL_30=8
-SEL_13=9
-SEL_11=10
-SEL_10=11
-SEL_03=12
-SEL_01=13
-SEL_00=14
-SEL_0=15
-SEL_1=16
-SEL_2=17
-SEL_3=18
-SEL_4=19
-SEL_5=20
-SEL_6=21
-SEL_7=22
-SEL_1_0=23
-SEL_2_0=24
-SEL_2_1=25
-SEL_3_0=26
-SEL_3_1=27
-SEL_3_2=28
-SEL_4_0=29
-SEL_4_1=30
-SEL_4_2=31
-SEL_5_0=32
-SEL_5_1=33
-SEL_5_2=34
-SEL_4_3=35
-SEL_0_0=36
-SEL_1_1=37
-SEL_2_2=38
-SEL_3_3=39
-SEL_4_4=40
-SEL_0_1=41
-SEL_0_2=42
-SEL_1_2=43
-SEL_0_3=44
-SEL_1_3=45
-SEL_2_3=46
-SEL_0_4=47
-SEL_1_4=48
-SEL_2_4=49
-SEL_0_5=50
-SEL_1_5=51
-SEL_2_5=52
-SEL_3_4=53
+SEL_zhusheng = 0
+SEL_ping = 1
+SEL_kesheng = 2
+SEL_rangsheng = 3
+SEL_rangping = 4
+SEL_rangfu = 5
+SEL_33 = 6
+SEL_31 = 7
+SEL_30 = 8
+SEL_13 = 9
+SEL_11 = 10
+SEL_10 = 11
+SEL_03 = 12
+SEL_01 = 13
+SEL_00 = 14
+SEL_0 = 15
+SEL_1 = 16
+SEL_2 = 17
+SEL_3 = 18
+SEL_4 = 19
+SEL_5 = 20
+SEL_6 = 21
+SEL_7 = 22
+SEL_1_0 = 23
+SEL_2_0 = 24
+SEL_2_1 = 25
+SEL_3_0 = 26
+SEL_3_1 = 27
+SEL_3_2 = 28
+SEL_4_0 = 29
+SEL_4_1 = 30
+SEL_4_2 = 31
+SEL_5_0 = 32
+SEL_5_1 = 33
+SEL_5_2 = 34
+SEL_4_3 = 35
+SEL_0_0 = 36
+SEL_1_1 = 37
+SEL_2_2 = 38
+SEL_3_3 = 39
+SEL_4_4 = 40
+SEL_0_1 = 41
+SEL_0_2 = 42
+SEL_1_2 = 43
+SEL_0_3 = 44
+SEL_1_3 = 45
+SEL_2_3 = 46
+SEL_0_4 = 47
+SEL_1_4 = 48
+SEL_2_4 = 49
+SEL_0_5 = 50
+SEL_1_5 = 51
+SEL_2_5 = 52
+SEL_3_4 = 53
 
 PLAYWAY_SPF = 0  # 胜平负
 PLAYWAY_RQSPF = 1  # 让球胜平负
@@ -168,6 +167,9 @@ class IPlayRelationship(object):
 
     def getRelationship(self, firstIndex, secondIndex):
         return VAR_50
+
+    def getRangqiu(self):
+        return self.ranqiu;
 
 
 # /***
@@ -213,7 +215,7 @@ class SpfBanquanRelationship(IPlayRelationship):
 
 class SpfRqspfRelationship(IPlayRelationship):
     def getRelationship(self, firstId, secondId):
-        indexs = rqspfIndex2SpfIndexs(secondId, self.ranqiu)
+        indexs = rqspfIndex2SpfIndexs(secondId, self.getRangqiu())
         if (isArrayContainValue(indexs, firstId)):
             return VAR_50
         return VAR_0
@@ -332,8 +334,8 @@ class SpfBifenRelationship(IPlayRelationship):
 
 class RqspfBanquanRelationship(IPlayRelationship):
     def getRelationship(self, firstId, secondId):
-        indexs = rqspfIndex2SpfIndexs(secondId, self.ranqiu)
-        spfIndex = banquanIndex2SpfIndex(firstId)
+        indexs = rqspfIndex2SpfIndexs(firstId, self.getRangqiu())
+        spfIndex = banquanIndex2SpfIndex(secondId)
         if isArrayContainValue(indexs, spfIndex[1]):
             return VAR_50
         return VAR_0
@@ -347,7 +349,7 @@ class RqspfJinqiuRelationship(IPlayRelationship):
                     return True
 
     def getRelationship(self, firstId, secondId):
-        datas = rqspfIndex2SpfIndexs(firstId, self.ranqiu)
+        datas = rqspfIndex2SpfIndexs(firstId, self.getRangqiu())
         datas2 = jinqiuIndex2SpfIndexs(secondId)
         if (self.icontains(datas, datas2)):
             return VAR_50
@@ -355,7 +357,7 @@ class RqspfJinqiuRelationship(IPlayRelationship):
 
 
 class RqspfBifenRelationship(IPlayRelationship):
-    def getRelatinship(self, firstId, secondId):
+    def getRelationship(self, firstId, secondId):
         scoreInfo = listScores[secondId]
         value = scoreInfo.getJinqiuCha()
         # // 胜其它
@@ -365,25 +367,25 @@ class RqspfBifenRelationship(IPlayRelationship):
                 if (firstId == 0):  # 胜其它选 让胜,是可能发生的
                     return VAR_50
                 elif firstId == 1:  # 胜其它选让平
-                    if (self.rangqiu <= -1):  # //[1+rangqiu,+无穷+rangqiu)  让球的值是-1到-无穷
+                    if (self.getRangqiu() <= -1):  # //[1+rangqiu,+无穷+rangqiu)  让球的值是-1到-无穷
                         return VAR_50
                     return VAR_0  # //让平不可能了
                 elif firstId == 2:  # //胜其它选让负
-                    if (self.rangqiu <= -2):
+                    if (self.getRangqiu() <= -2):
                         return VAR_50
                     return VAR_0  # // 让负不可能了
             elif value == -1:  # 差值是[-1,-无穷)
                 if firstId == 0:
-                    if (self.rangqiu >= 2):
+                    if (self.getRangqiu() >= 2):
                         return VAR_50
                     return VAR_0  # // 让胜不可能了
                 elif firstId == 1:  # 负其它选让平
-                    if (self.rangqiu >= 1):  # 大于等于1
+                    if (self.getRangqiu() >= 1):  # 大于等于1
                         return VAR_50
                     return VAR_0  # // 让平不可能了
                 elif firstId == 2:  # 负其它选让负, 是可能发生的
                     return VAR_50
-        mChaBall = value + self.rangqiu
+        mChaBall = value + self.getRangqiu()
         # // 让胜
         if (mChaBall > 0):
             if firstId == 0:
@@ -405,13 +407,19 @@ class RqspfBifenRelationship(IPlayRelationship):
 class BanquanJinqiuRelationship(SpfJinqiuRelationship):
     def getRelationship(self, banquanIndex, jinqiuIndex):
         spfIndexs = banquanIndex2SpfIndex(banquanIndex)
-        var= super(BanquanJinqiuRelationship, self).getRelationship(spfIndexs[1], jinqiuIndex)
+
+        # 总进球为0时,只是能平平
+        if jinqiuIndex == 0:
+            if (spfIndexs[0] == 1 and spfIndexs[1] == 1):
+                return VAR_50
+            return VAR_0
+
+        var = super(BanquanJinqiuRelationship, self).getRelationship(spfIndexs[1], jinqiuIndex)
         # 胜负，负胜，总进球大于等于3
-        if abs(spfIndexs[0]-spfIndexs[1])==2 and var==VAR_50:
-            if jinqiuIndex<3:
+        if abs(spfIndexs[0] - spfIndexs[1]) == 2 and var == VAR_50:
+            if jinqiuIndex < 3:
                 return VAR_0
         return var
-
 
 
 class BanquanBifenRelationship(IPlayRelationship):
@@ -451,9 +459,9 @@ class JinqiuBifenRelationship(IPlayRelationship):
         # //0球和0-0的比分
         if (ballIndex == 0 and allBall == 0):
             return VAR_100
-        #其它比分总进球为7
-        if(info.isOther):
-            if ballIndex==7:
+        # 其它比分总进球为7
+        if (info.isOther):
+            if ballIndex == 7:
                 return VAR_50
             return VAR_0
         if (ballIndex == allBall):
@@ -461,6 +469,7 @@ class JinqiuBifenRelationship(IPlayRelationship):
         return VAR_0
 
 
+# 胜平负 让球  半全场 总进球 比分 这个顺序
 hashMap = {plays2Key(PLAYWAY_SPF, PLAYWAY_RQSPF): SpfRqspfRelationship(),
            plays2Key(PLAYWAY_SPF, PLAYWAY_BANQUAN): SpfBanquanRelationship(),
            plays2Key(PLAYWAY_SPF, PLAYWAY_JINQIU): SpfJinqiuRelationship(),
@@ -535,13 +544,13 @@ def var2Text(var):
     }
     return dict[var]
 
-#玩法转换成文字
+
+# 玩法转换成文字
 def playIndex2Text(playIndex):
-    return '%s(%s)'%(playIndex2PlayText(playIndex),listText[playIndex])
+    return '%s(%s)' % (playIndex2PlayText(playIndex), listText[playIndex])
 
 
 def getRelationship(playIndex1, playIndex2, rangqiu):
-
     playWay1 = index2PlayId(playIndex1)
     playWay2 = index2PlayId(playIndex2)
     # // 玩法相同
@@ -568,6 +577,8 @@ def getRelationship(playIndex1, playIndex2, rangqiu):
 
 class FBallItem(object):
     def __init__(self, selArray, rangqiu, oddArray=listOdd):
+        # 排序
+        selArray.sort()
         self.selArray = selArray
         self.rangqiu = rangqiu
         self.oddArray = oddArray
@@ -582,8 +593,9 @@ class Pair:
         self.a = minVar
         self.b = maxVar
         self.value = value
+
     def __str__(self):
-        return "%d,%d"%(self.a,self.b);
+        return "%d,%d" % (self.a, self.b);
 
     def isMaxRate(self):
         return self.value == VAR_50 or self.value == VAR_100
@@ -601,9 +613,9 @@ class GroupOne(object):
         self.hashSet = set()
 
     def __str__(self):
-        var=""
+        var = ""
         for index in self.hashSet:
-            var+=playIndex2Text(index)
+            var += playIndex2Text(index)
         return var
 
     def getAllRate(self):
@@ -622,8 +634,6 @@ class GroupOne(object):
     def addOne(self, a):
         self.hashSet.add(a)
 
-
-
     def isFinishMergin(self, pair, listParis):
         if self.hashSet.__len__() == 0:
             return False
@@ -631,32 +641,29 @@ class GroupOne(object):
         isContainA = self.hashSet.__contains__(pair.a)
         isContainB = self.hashSet.__contains__(pair.b)
 
-        print "pair",pair
-
         if (isContainA and isContainB):
             return True
 
         # 判断传递关系
         if isContainB:
             for integer in self.hashSet:
-                if self.containsItem(Pair(pair.a, integer),listParis) == False:
+                if self.containsItem(Pair(pair.a, integer), listParis) == False:
                     return False
             self.add(pair)
             return True
         if isContainA:
             for integer in self.hashSet:
-                if self.containsItem(Pair(pair.b, integer),listParis) == False:
+                if self.containsItem(Pair(pair.b, integer), listParis) == False:
                     return False
             self.add(pair)
             return True
         return False
 
-    def containsItem(self,pair,pairs):
+    def containsItem(self, pair, pairs):
         for i in pairs:
             if (i.equals(pair)):
                 return True
         return False
-
 
 
 class Groups:
@@ -664,10 +671,11 @@ class Groups:
         self.fballItem = fballItem
         self.listGroups = []
         pass
+
     def __str__(self):
-        var=""
+        var = ""
         for one in self.listGroups:
-            var+=one.__str__()+"|"
+            var += one.__str__() + "|"
         return var
 
     def containsValue(self, value):
@@ -795,16 +803,16 @@ class RewardHelp:
         selArr = self.fballItem.selArray
         if selArr.__len__() == 1:  # {//长度为1表示最小值是它，最大值也是它
             self.maxRate = self.minRate = selArr[0];
-            print "maxRate = minRate = " , self.maxRate
+            print "maxRate = minRate = ", self.maxRate
             return;
 
         # //计算最小分组赔率,最大分组赔率
         for one in self.maxGroups.listGroups:
             self.maxRate = max(one.getAllRate(), self.maxRate);
         for one in self.minGroups.listGroups:
-            self.minRate = min(one.getAllRate(),  self.minRate);
-        print "maxRate " ,  self.maxRate
-        print "minRate " ,  self.minRate
+            self.minRate = min(one.getAllRate(), self.minRate);
+        print "maxRate ", self.maxRate
+        print "minRate ", self.minRate
 
 
 def getRangeReturns(listFballItems, passWayItems):
@@ -837,30 +845,24 @@ if __name__ == "__main__":
     # passWays = [1, 2, 3, 4, 5, 6]
     #
     # 测试关系
-    getRelationship(SEL_30, SEL_2, 1)
-    # getRelationship(SEL_ping, SEL_3, 1)
+    # getRelationship(SEL_30, SEL_2, 1)
+    # getRelationship(SEL_rangfu, SEL_4_2, 1)
+
     # list= getCombinationList(54,2)
     # for arr in list:
-    #     if(arr[0]>=SEL_01):
+    #     if(arr[0]>SEL_rangfu):
     #         break
     #     getRelationship(arr[0], arr[1], 1)
-
 
     #
     # sett = {1, 2, 1}
 
     # print getCombinationList(4, 4)
 
-
-    listFballItems=[
-        FBallItem([SEL_zhusheng,SEL_3,SEL_3_0,SEL_2_5],1),
-        FBallItem([SEL_0,SEL_0_0], 1)
+    #
+    listFballItems = [
+        FBallItem([SEL_zhusheng, SEL_3, SEL_3_0, SEL_2_5, SEL_0_5, SEL_30, SEL_03], 1),
+        FBallItem([SEL_0, SEL_0_0], 1)
     ]
-
-    print getRangeReturns(listFballItems,[2])
-
-
-
-
-
-
+    #
+    print getRangeReturns(listFballItems, [2])

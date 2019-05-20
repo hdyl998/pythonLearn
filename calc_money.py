@@ -826,8 +826,7 @@ def getRangeReturns(listFballItems, passWayItems):
 
     for item in passWayItems:
         list = getCombinationList(listFballItems.__len__(), item)
-
-        print list
+        print "组合为:",list
         for arr in list:
             minVar = 1
             maxVar = 1

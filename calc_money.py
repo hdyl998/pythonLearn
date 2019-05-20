@@ -802,7 +802,7 @@ class RewardHelp:
         self.buildGroups();
         selArr = self.fballItem.selArray
         if selArr.__len__() == 1:  # {//长度为1表示最小值是它，最大值也是它
-            self.maxRate = self.minRate = selArr[0];
+            self.maxRate = self.minRate = float(self.fballItem.oddArray[selArr[0]]);
             print "maxRate = minRate = ", self.maxRate
             return;
 
@@ -865,12 +865,17 @@ if __name__ == "__main__":
     #     FBallItem([SEL_0, SEL_0_0], 1)
     # ]
     listFballItems = [
-        FBallItem([SEL_zhusheng, SEL_rangfu], 1),
-        FBallItem([SEL_zhusheng, SEL_rangfu], 1),
-        FBallItem([SEL_zhusheng, SEL_rangfu], 1)
+        FBallItem([SEL_zhusheng,SEL_0_4], 1),
+        FBallItem([SEL_zhusheng], 1),
+        FBallItem([SEL_zhusheng], 1),
+        FBallItem([SEL_zhusheng], 1),
+        FBallItem([SEL_zhusheng], 1),
+        FBallItem([SEL_zhusheng], 1),
+        FBallItem([SEL_zhusheng], 1),
+        FBallItem([SEL_zhusheng], 1)
     ]
 
     #
-    print getRangeReturns(listFballItems, [2])
+    print getRangeReturns(listFballItems, [2,3,4,5,6,7,8])
 
     print time.time()-vartime;

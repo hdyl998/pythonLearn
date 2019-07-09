@@ -868,10 +868,14 @@ if __name__ == "__main__":
         FBallItem([SEL_zhusheng,SEL_0_4], 1),
         FBallItem([SEL_zhusheng,SEL_0_4], 1),
         FBallItem([SEL_zhusheng,SEL_0_4], 1),
-
+        FBallItem([SEL_zhusheng, SEL_0_4], 1),
+        FBallItem([SEL_zhusheng, SEL_0_4], 1),
+        FBallItem([SEL_zhusheng, SEL_0_4], 1),
+        FBallItem([SEL_zhusheng, SEL_0_4], 1),
+        FBallItem([SEL_zhusheng, SEL_0_4], 1)
     ]
 
     #
-    print getRangeReturns(listFballItems, [2,3])
+    print getRangeReturns(listFballItems, [2,3,4,5,6,7,8])
 
     print time.time()-vartime;
